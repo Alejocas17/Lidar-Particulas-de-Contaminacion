@@ -17,6 +17,13 @@ from PyQt5.QtCore import QTimer
 
 # import Opencv module
 import cv2
+# import libraries useb by lumenera camera
+
+import time
+from lucam import Lucam
+lucam = Lucam(1)
+
+# behavior of the program
 
 from ui_main_window import *
 
@@ -53,8 +60,11 @@ class MainWindow(QWidget):
         self.ui.image_label.setPixmap(QPixmap.fromImage(qImg))
     #view Camera2
     def viewCam2(self):
-            # read image in BGR format
+        
+        # read image in BGR format
         ret2, image2 = self.cap2.read()
+        
+       
         # convert image to RGB format
         image2 = cv2.cvtColor(image2, cv2.COLOR_BGR2RGB)
         # get image infos
@@ -64,6 +74,18 @@ class MainWindow(QWidget):
         qImg2 = QImage(image2.data, width, height, step, QImage.Format_RGB888)
         # show image in img_label
         self.ui.image_label2.setPixmap(QPixmap.fromImage(qImg2))
+        
+        # n = numero de Fotos que se quiere
+        n = 5;
+        for counter in range (n) :
+            # Creating a Counter
+            print(counter)
+            # Taking the snapshot
+            capture = lucam.TakeSnapshot()
+            # Saving the SnapShot
+            lucam.SaveImage(capture, 'prueba_foto'+str(counter)+'.jpg')
+            
+        
 
 
     # start/stop timer
@@ -71,7 +93,7 @@ class MainWindow(QWidget):
         # if timer is stopped
         if not self.timer.isActive():
             # create video capture
-            self.cap = cv2.VideoCapture(0)
+            self.cap = cv2.VideoCapture(2)
             # start timer
             self.timer.start(20)
             # update control_bt text
@@ -93,7 +115,7 @@ class MainWindow(QWidget):
             # start timer
             self.timer2.start(20)
             # update control_bt text
-            self.ui.control_bt2.setText("Stop")
+            self.ui.control_bt2.setText("Captura Realizada")
         # if timer is started
         else:
             # stop timer
@@ -101,7 +123,7 @@ class MainWindow(QWidget):
             # release video capture
             self.cap2.release()
             # update control_bt text
-            self.ui.control_bt2.setText("Start")
+            self.ui.control_bt2.setText("Tomar Captura")
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
