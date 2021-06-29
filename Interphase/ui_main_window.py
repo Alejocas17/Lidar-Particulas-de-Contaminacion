@@ -43,7 +43,7 @@ class Ui_Form(object):
         self.control_bt = QtWidgets.QPushButton(Form)
         self.control_bt.setObjectName("control_bt")
         self.horizontalLayout_2.addWidget(self.control_bt)
-        self.control_bt2 = QtWidgets.QPushButton(Form)
+        self.control_bt2 = QtWidgets.QToolButton(Form)
         self.control_bt2.setObjectName("control_bt2")
         self.horizontalLayout_2.addWidget(self.control_bt2)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
